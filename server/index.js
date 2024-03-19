@@ -30,10 +30,7 @@ var storage = multer.diskStorage({
   
 var upload = multer({ storage: storage })
 
-app.get('/', roleMiddleware(["ADMIN"]), async (req, res) => {
-    const data = await sql`select * from Users`
-    res.send(data)
-})
+
 
 //ветка регистрации
 app.post('/reg', register)
@@ -41,12 +38,12 @@ app.post('/reg', register)
 app.post('/auth', auth)
 
 app.get("/admin_info/", async (req, res) => { 
-    const data = await sql`select * from Users` 
+    const data = await sql`select * from Users where role = 'ADMIN'` 
     res.send(data)
 })
 
 app.get('/user_info/', async (req, res) => { 
-    const data = await sql`select * from Users` 
+    const data = await sql`select * from Users where role = 'USER'` 
     res.send(data) 
 })
 
